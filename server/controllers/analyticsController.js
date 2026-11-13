@@ -1,0 +1,2 @@
+import Report from '../models/Report.js';import Handler from '../models/Handler.js';
+export async function analytics(req,res){const [total,status,category,zone,priority,handlers]=await Promise.all([Report.countDocuments(),Report.aggregate([{$group:{_id:'$status',count:{$sum:1}}}]),Report.aggregate([{$group:{_id:'$category',count:{$sum:1}}}]),Report.aggregate([{$group:{_id:'$zone',count:{$sum:1}}}]),Report.aggregate([{$group:{_id:'$priority',count:{$sum:1}}}]),Handler.find()]);res.json({total,status,category,zone,priority,handlers})}

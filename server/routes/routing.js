@@ -1,0 +1,1 @@
+import {Router} from 'express';import Routing from '../models/Routing.js';import {auth,roles} from '../middleware/auth.js';const r=Router();r.get('/',auth,roles('admin'),async(req,res)=>res.json(await Routing.find().populate('reportId','reportId category zone priority status').populate('handlerId','name email').sort({createdAt:-1})));export default r;
